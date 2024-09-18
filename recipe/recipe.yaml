@@ -1,0 +1,71 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/prefix-dev/recipe-format/main/schema.json
+# Suggests: BiocStyle, GenomicFeatures, edgeR, org.Hs.eg.db, TxDb.Hsapiens.UCSC.hg19.knownGene
+schema_version: 1
+
+context:
+  version: 1.36.0
+  name: groHMM
+  bioc: 3.18
+
+package:
+  name: bioconductor-${{ name|lower }}
+  version: ${{ version }}
+
+source:
+  url:
+    - https://bioconductor.org/packages/${{ bioc }}/bioc/src/contrib/${{ name }}_${{ version }}.tar.gz
+    - https://bioconductor.org/packages/${{ bioc }}/bioc/src/contrib/Archive/${{ name }}/${{ name }}_${{ version }}.tar.gz
+    - https://bioarchive.galaxyproject.org/${{ name }}_${{ version }}.tar.gz
+    - https://depot.galaxyproject.org/software/bioconductor-${{ name|lower }}/bioconductor-${{ name|lower }}_${{ version }}_src_all.tar.gz
+  md5: 0b1077948ddc9895c57188ca2560bc10
+
+build:
+  number: 1
+  dynamic_linking:
+    rpaths:
+      - lib/R/lib/
+      - lib/
+
+requirements:
+  host:
+    - bioconductor-genomeinfodb >=1.38.0,<1.39.0
+    - bioconductor-genomicalignments >=1.38.0,<1.39.0
+    - bioconductor-genomicranges >=1.54.0,<1.55.0
+    - bioconductor-iranges >=2.36.0,<2.37.0
+    - bioconductor-rtracklayer >=1.62.0,<1.63.0
+    - bioconductor-s4vectors >=0.40.0,<0.41.0
+    - r-base
+    - r-mass
+    - libblas
+    - liblapack
+  run:
+    - bioconductor-genomeinfodb >=1.38.0,<1.39.0
+    - bioconductor-genomicalignments >=1.38.0,<1.39.0
+    - bioconductor-genomicranges >=1.54.0,<1.55.0
+    - bioconductor-iranges >=2.36.0,<2.37.0
+    - bioconductor-rtracklayer >=1.62.0,<1.63.0
+    - bioconductor-s4vectors >=0.40.0,<0.41.0
+    - r-base
+    - r-mass
+  build:
+    - ${{ compiler('c') }}
+    - make
+  run_exports: ${{ pin_subpackage("bioconductor-grohmm", upper_bound="x.x") }}
+
+tests:
+  - script:
+      - $R -e "library('${{ name }}')"
+
+about:
+  license: GPL-3.0-only
+  summary: GRO-seq Analysis Pipeline
+  description: A pipeline for the analysis of GRO-seq data.
+  # FIXME license_file: ${{ env.get("PREFIX") }}/lib/R/share/licenses/GPL-3
+  homepage: https://bioconductor.org/packages/${{ bioc }}/bioc/html/${{ name }}.html
+
+extra:
+  additional-platforms:
+    - linux-aarch64
+  identifiers:
+    - biotools:${{ name|lower }}
+
