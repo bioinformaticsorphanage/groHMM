@@ -31,8 +31,6 @@ requirements:
     - bioconductor-s4vectors >=0.40.0,<0.41.0
     - r-base
     - r-mass
-    - libblas
-    - liblapack
   run:
     - bioconductor-genomeinfodb >=1.38.0,<1.39.0
     - bioconductor-genomicalignments >=1.38.0,<1.39.0
