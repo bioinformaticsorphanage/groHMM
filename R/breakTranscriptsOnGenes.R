@@ -147,12 +147,17 @@ breakTranscriptsOnGenes <- function(tx, annox, strand="+", geneSize=5000,
         }
     }
 
-    mcols(bT)$status <- "broken"
-    mcols(bT)$ID <- paste(seqnames(bT), "_", start(bT), strand(bT), sep="")
-    okTrans <- setdiff(1:length(tx), dupTrans)
-    all <- c(tx[okTrans,], bT)
-    cat(length(unique(ol.df$trans)), " transcripts are broken into ", 
-        length(bT), "\n")
+    if (!is.null(bT)) {
+      mcols(bT)$status <- "broken"
+      mcols(bT)$ID <- paste(seqnames(bT), "_", start(bT), strand(bT), sep = "")
+      okTrans <- setdiff(1:length(tx), dupTrans)
+      all <- c(tx[okTrans, ], bT)
+      cat(length(unique(ol.df$trans)), " transcripts are broken into ", length(bT), "\n")
+    } else {
+      # No transcripts were broken; all original transcripts remain
+      all <- tx
+      cat("No transcripts were broken.\n")
+    }
 
     return(all[order(as.character(seqnames(all)), start(all)),])
 }
