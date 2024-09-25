@@ -3,7 +3,7 @@
 schema_version: 1
 
 context:
-  version: 1.36.0
+  version: 1.36.1
   name: groHMM
   bioc: 3.18
 
