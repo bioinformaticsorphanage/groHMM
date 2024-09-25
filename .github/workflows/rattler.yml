@@ -12,11 +12,11 @@ jobs:
         uses: prefix-dev/rattler-build-action@v0.2.14
         with:
           build-args: -c conda-forge -c bioconda
-      # TODO
-      # - run: |
-      #     for pkg in $(find output -type f \( -name "*.conda" -o -name "*.tar.bz2" \) ); do
-      #       echo "Uploading ${pkg}"
-      #       rattler-build upload prefix -c my-channel "${pkg}"
-      #     done
-      #   env:
-      #     PREFIX_API_KEY: ${{ secrets.PREFIX_API_KEY }}
+      - run: |
+          for pkg in $(find output -type f \( -name "*.conda" -o -name "*.tar.bz2" \) ); do
+            echo "Uploading ${pkg}"
+            rattler-build upload prefix "${pkg}"
+          done
+        env:
+          PREFIX_API_KEY: ${{ secrets.PREFIX_API_KEY }}
+          PREFIX_CHANNEL: "https://repo.prefix.dev/bioinformaticsorphanage"
