@@ -170,8 +170,8 @@ getTxDensity <- function(tx, annox, plot=TRUE, scale=1000L, nSampling=0L,
     TP <- trap.rule(1:scale, profile[(scale+1):(scale*2)])/scale
     PostTTS <- trap.rule(1:scale, profile[(scale*2+1):(scale*3)])/scale
     TUA <- (TP + (TP- FivePrimeFP))/(1 + TP)
-    return(list(FivePrimeFP=FivePrimeFP, TP=TP, PostTTS=PostTTS, TUA=TUA))
-
+    x_values <- -(up*scale):(down*scale-1)
+    return(list(FivePrimeFP=FivePrimeFP, TP=TP, PostTTS=PostTTS, TUA=TUA, x=x_values, profile=profile))
 }
 
 getWP <- function (lv, lw) {
